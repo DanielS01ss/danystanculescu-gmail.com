@@ -40,8 +40,7 @@ closeModal= ()=>{
 
 componentDidMount(){
         this.setProducts();
-        // console.log(this.state.products);
-        // console.log(this.state.cart);
+
         const crt = localStorage.getItem('myCart');
         this.setState({cart: JSON.parse(crt) ? JSON.parse(crt) : []},()=>{
 
@@ -87,7 +86,7 @@ componentDidMount(){
                 cartTotal:myTax.totalul
               }
           });
-          console.log(this.state.cartTotal);
+
         }
 
 
@@ -156,7 +155,21 @@ this.setState(()=>{
 ////aici incrementam numarul de bucati la un produs
 increment = (id) => {
 
-  console.log('this is increment method');
+  let tempCart = [...this.state.cart];
+  const selectProduct = tempCart.find(item=>item.id === id);
+  ///acuma cautam indexul
+  const index = tempCart.indexOf(selectProduct);
+  const product = tempCart[index];
+
+  product.count =product.count+1;
+  product.total = product.count*product.price;
+
+  this.setState(()=>{
+    return{cart:[...tempCart]}
+  },()=>{
+    this.addTotals();
+    localStorage.setItem("myCart",JSON.stringify(tempCart));
+  })
 
 };
 
@@ -164,6 +177,7 @@ increment = (id) => {
 ///aici scoatem un item din cart
 /// foloseste functia removeItem ca sa il scoti si din local storage sa nu te incurce!!
 removeItem = (id) =>{
+
     let tempProducts = [...this.state.products] ;
     let tempCart = [...this.state.cart];
 
@@ -183,7 +197,7 @@ removeItem = (id) =>{
       }
     },()=>{
       this.addTotals();
-    })
+    });;
 
 ///trebuie sa scoatem un element si din localStorage
 let produse  = localStorage.getItem("myCart");
@@ -210,7 +224,30 @@ else{
 
 decrement = (id) =>{
 
-}
+  let tempCart = [...this.state.cart];
+  const selectProduct = tempCart.find(item=>item.id === id);
+
+  const index = tempCart.indexOf(selectProduct);
+  const product  = tempCart[index];
+  product.count = product.count -1;
+  if(product.count === 0 )
+  {
+    this.removeItem(id);
+  }
+  else{
+    product.total = product.count * product.price;
+    this.setState(
+      ()=>{
+        return {cart:[...tempCart]};
+      },
+      ()=>{
+        this.addTotals();
+        localStorage.setItem("myCart",JSON.stringify(tempCart));
+      }
+    )
+  }
+
+};
 ///aici scoatem toate itemele din cart
 ///fi atent aici sa golesti local cache
 
@@ -246,7 +283,6 @@ addTotals = ()=>
      subtotal:subTotal
   };
 
-  console.log(myrez);
   localStorage.setItem("total",JSON.stringify(myrez));
 
   this.setState(()=>{
