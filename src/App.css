@@ -7,7 +7,9 @@ fara sa le scriem din nou si din nou */
   --mainWhite:#f3f3f3;
   --mainDark:#232528;
   --mainYellow:#ffa400;
+  --mainRed:  #0033cc;
 }
+
 
 /* aici vom adauga fonturile pe pagina
 */
@@ -15,7 +17,6 @@ fara sa le scriem din nou si din nou */
 body{
   /* Pentru ca noi avem by default boostrap o sa punem flagul important ca sa nu scrie peste*/
   font-family: 'Nunito', sans-serif !important;
-
   background: var(--mainWhite)!important;
   color: var(--mainDark)!important;
 }
@@ -31,7 +32,11 @@ body{
 
 }
 
+/* Aici fac o smecherie pentru boostrap ca sa arate la fel imaginile de pe pagina */
+
+
+
 .text-bright{
   color: var(--mainBlue);
-  
+
 }
