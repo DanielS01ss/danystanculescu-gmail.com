@@ -64,6 +64,7 @@ export default class Details extends Component{
                     </Link>
                   <span className="pl-xl-4" >
                     <ButtonContainer cart disabled={inCart?true:false} onClick={()=>{
+                      
                       value.addToCart(id);
                       value.openModal(id);
                     }}>

@@ -11,8 +11,11 @@ state ={
   products:[],
   detailProduct:detailProduct,
   cart:[],
-  modalOpen:true,
+  modalOpen:false,
   modalProduct:detailProduct,
+  cartSubtTotal:0,
+  cartTax:0,
+  cartTotal:0,
 };
 
 ///asta e rulata prima data
@@ -48,10 +51,7 @@ componentDidMount(){
           product.count = 1;
           const price  = product.price;
           product.total = price;
-          this.setState(()=>{
-             return {products:tempProducts,cart:[...this.state.cart,product]};
-
-          });
+        
 
         });
 
@@ -106,17 +106,45 @@ product.inCart = true;
 product.count = 1;
 const price  = product.price;
 product.total = price;
+
 this.setState(()=>{
    return {products:tempProducts,cart:[...this.state.cart,product]};
 
 },
         () => {
             ///this.addTotal();
-            localStorage.setItem('myCart', JSON.stringify(this.state.cart))
+            localStorage.setItem('myCart', JSON.stringify(this.state.cart));
+            console.log(this.state.cart);
         });
 
 ///adauga id-ul si la local storage
 };
+
+////aici incrementam numarul de bucati la un produs
+increment = (id) => {
+
+  console.log('this is increment method');
+
+};
+
+///aici il decrementam
+///aici scoatem un item din cart
+/// foloseste functia removeItem ca sa il scoti si din local storage sa nu te incurce!!
+removeItem = (id) =>{
+   console.log("item removed");
+};
+
+decrement = (id) =>{
+  console.log("idfdsfdgfd");
+}
+///aici scoatem toate itemele din cart
+///fi atent aici sa golesti local cache
+
+clearCart = (id)=>{
+  console.log("car")
+
+}
+
 
 
 
@@ -129,7 +157,11 @@ this.setState(()=>{
        handleDetail:this.handleDetail,
        addToCart:this.addToCart,
        openModal:this.openModal,
-       closeModal:this.closeModal
+       closeModal:this.closeModal,
+       increment:this.increment,
+       decrement:this.decrement,
+       removeItem:this.removeItem,
+       clearCart:this.clearCart
           }}>
 
             {this.props.children}
